@@ -1,0 +1,77 @@
+//Дан двусвязный линейный список и указатель на первый элемент данного списка. Необходимо вставить значение Х после N-го по счету элемента списка.
+//Значение N не превышает количество элементов исходного списка. В качестве результата вывести ссылку на элемент, который в получившемся списке
+//находится сразу после вставленного элемента.
+
+#include "pt4.h"
+using namespace std;
+
+void Solve()
+{
+    Task("ListWork38");
+    int x, n;
+    PNode Head, Back, p;
+    pt >> x >> n >> Head;
+    int i = 1;
+    p = Head;
+    while (p->Next != NULL) {
+        p = p->Next;
+    }
+    Back = p;
+    p = Head;
+    if (p->Next == NULL) {
+        PNode NewNode = new TNode;
+        NewNode->Next = NULL;
+        NewNode->Data = x;
+        NewNode->Prev = Back;
+        Back->Next = NewNode;
+        Back = NewNode;
+    }
+    else {
+        while (p->Next != NULL) {
+            if (n == 1) {
+                if (p->Next == NULL) {
+                    PNode NewNode = new TNode;
+                    NewNode->Next = NULL;
+                    NewNode->Data = x;
+                    NewNode->Prev = Back;
+                    Back->Next = NewNode;
+                    Back = NewNode;
+                    break;
+                }
+                else {
+                    PNode NewNode = new TNode;
+                    NewNode->Next = p->Next;
+                    NewNode->Data = x;
+                    NewNode->Prev = p;
+                    p->Next->Prev = NewNode;
+                    p->Next = NewNode;
+                    break;
+                }
+            }
+            p = p->Next;
+            if (i == n - 1) {
+                if (p->Next == NULL) {
+                    PNode NewNode = new TNode;
+                    NewNode->Next = NULL;
+                    NewNode->Data = x;
+                    NewNode->Prev = Back;
+                    Back->Next = NewNode;
+                    Back = NewNode;
+                    break;
+                }
+                else {
+                    PNode NewNode = new TNode;
+                    NewNode->Next = p->Next;
+                    NewNode->Data = x;
+                    NewNode->Prev = p;
+                    p->Next->Prev = NewNode;
+                    p->Next = NewNode;
+                    break;
+                }
+            }
+            i++;
+        }
+    }
+    p = p->Next;
+    pt << p->Next;
+}
