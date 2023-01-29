@@ -1,0 +1,31 @@
+//Дан двусвязный линейный список и указатель на первый элемент этого списка. Создать текстовый файл, в который вывести содержимое списка в обратном порядке.
+//По ходу вывода списка удалять элементы в нём. Числа выводить в одну строку, разделяя ровно одним пробелом, в конце строки пробел не ставить.
+
+#include "pt4.h"
+#include <fstream>
+using namespace std;
+
+void Delete(PNode& Tail) {
+    if (Tail->Prev != NULL) {
+        Tail = Tail->Prev;
+        Tail->Next = NULL;
+    }
+}
+void Solve()
+{
+    Task("ListWork63");
+    ofstream file;
+    PNode p1;
+    string str;
+    pt >> p1 >> str;
+    file.open(str);
+    if (file && p1) {
+        while (p1->Next != NULL)p1 = p1->Next;
+        file << p1->Data;
+        while (p1->Prev != NULL) {
+            Delete(p1);
+            file << " " << p1->Data;
+        }
+    }
+    file.close();
+}
